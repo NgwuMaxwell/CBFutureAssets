@@ -1,0 +1,227 @@
+<?php $__env->startSection('title', $title); ?>
+<?php $__env->startSection('content'); ?>
+    <!-- Page title -->
+
+
+    <div class="wrapper-content">
+    <!-- <div class="container" style="max-width:1300px"> -->
+    <div class="container" style="max-width:1400px">
+
+    <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
+<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.danger-alert','data' => []]); ?>
+<?php $component->withName('danger-alert'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
+<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
+<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
+<?php endif; ?>
+    <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
+<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.success-alert','data' => []]); ?>
+<?php $component->withName('success-alert'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
+<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
+<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
+<?php endif; ?>
+       <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
+<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.success-alert','data' => []]); ?>
+<?php $component->withName('success-alert'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
+<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
+<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
+<?php endif; ?>
+    <?php if (isset($component)) { $__componentOriginald4c8f106e1e33ab85c5d037c2504e2574c1b0975 = $component; } ?>
+<?php $component = $__env->getContainer()->make(App\View\Components\Alert::class, []); ?>
+<?php $component->withName('alert'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginald4c8f106e1e33ab85c5d037c2504e2574c1b0975)): ?>
+<?php $component = $__componentOriginald4c8f106e1e33ab85c5d037c2504e2574c1b0975; ?>
+<?php unset($__componentOriginald4c8f106e1e33ab85c5d037c2504e2574c1b0975); ?>
+<?php endif; ?>
+
+  <title> <?php echo e(Auth::user()->name); ?> | <?php echo e($title); ?> </title>
+
+  <div class="d-flex align-items-center p-3 bg-dark text-white rounded shadow">
+    <i class="fas fa-user-circle fa-2x me-3"></i> <!-- User Icon -->
+    <p class="mb-0 fs-5"><b>Username:</b> <?php echo e(Auth::user()->name); ?></p>
+</div>
+
+
+
+
+
+<!-- TradingView Widget BEGIN -->
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {
+      "symbols": [{
+          "proName": "FOREXCOM:SPXUSD",
+          "title": "S&P 500"
+        },
+        {
+          "proName": "FOREXCOM:NSXUSD",
+          "title": "Nasdaq 100"
+        },
+        {
+          "proName": "FX_IDC:EURUSD",
+          "title": "EUR/USD"
+        },
+        {
+          "proName": "BITSTAMP:BTCUSD",
+          "title": "BTC/USD"
+        },
+        {
+          "proName": "BITSTAMP:ETHUSD",
+          "title": "ETH/USD"
+        }
+      ],
+      "showSymbolLogo": true,
+      "colorTheme": "dark",
+      "isTransparent": false,
+      "displayMode": "relative",
+      "locale": "en"
+    }
+  </script>
+</div>
+<!-- TradingView Widget END -->
+<div class="row  align-items-center justify-content-between" style="margin-top:10px">
+  <div class="col-16 col-sm-16">
+    <div class="btn-group pull-right">
+      <a href="<?php echo e(url('dashboard')); ?>"><button class="btn btn-success btn-outline-light"><span class="">Account</span> <span class="text"><i class="fa fa-tachometer"></i></span></button></a>
+      <a href="<?php echo e(route('deposits')); ?>"><button class="btn btn-success btn-outline-light"><span class="">Make Deposit</span> <span class="text"><i class="fa fa-dollar-sign"></i></span></button></a>
+      <a href="<?php echo e(route('withdrawalsdeposits')); ?>"><button class="btn btn-success btn-outline-light"><span class="">Withdraw Funds</span> <span class="text"><i class="fa fa-chart-bar"></i></span></button></a>
+      <button class="btn btn-success btn-outline-light" data-toggle="modal" data-target="#mail_support"><span class="">Mail Us</span> <span class="text"><i class="fa fa-envelope"></i></span></button>
+      <a href="<?php echo e(route('profile')); ?>"><button class="btn btn-danger btn-outline-danger"><span class="">Settings</span> <i class="fa fa-cog fa-spin ml-2"></i></button></a>
+    </div>
+  </div>
+</div>
+<hr>
+
+
+
+<div class="row">
+  <div class="col-sm-16 col-md-8">
+    <div class="card">
+      <div class="card-header align-items-start justify-content-between flex">
+        <h4 class="pull-left">Deposit Using Bitcoin/Ethereum</h4>
+        <ul class="nav nav-pills card-header-pills pull-right">
+          <li class="nav-item">
+            <button class="btn btn-sm btn-link btn-round" data-toggle="collapse" data-target="#btc_deposit"><i class="fa fa-chevron-down"></i></button>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body" id="btc_deposit">
+
+        <?php $__currentLoopData = $dmethods; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <div class="ncard small">
+        <h6><?php echo e($item['name']); ?> Deposit Method</h6>
+        <hr>
+        <b>
+            <span style="color:gold"> Please make sure you upload your payment proof for quick payment verification</span><br>
+            <span style="color:#17a2b8 !important">On confirmation, our system will automatically convert your <?php echo e($item['name']); ?> to live value of Dollars. Ensure
+                that you deposit the actual <?php echo e($item['name']); ?> to the address specified on the payment Page.
+            </span>
+        </b>
+        <br>
+        <hr>
+
+        <button type="button" style="float:right" class="btn btn-primary" data-toggle="modal" data-target="#deposit-<?php echo e($item['id']); ?>"> Make Deposit </button>
+        <br><br>
+    </div>
+
+
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+        <!--<div class="ncard small">-->
+        <!--  <h6>Tether(USDT) Deposit Method</h6>-->
+        <!--  <hr>-->
+        <!--  <b>-->
+        <!--    <span style="color:gold"> Please make sure you upload your payment proof for quick payment verification</span><br>-->
+        <!--    <span style="color:#17a2b8 !important">On confirmation, our system will automatically convert your BTC or ETH to live value of POUND. Ensure-->
+        <!--      that you deposit the actual Bitcoin to the address specified on the payment Page.-->
+        <!--    </span>-->
+        <!--  </b>-->
+        <!--  <br>-->
+        <!--  <hr>-->
+        <!--  <button type="button" style="float:left" class="btn btn-primary" data-toggle="modal" data-target="#bitcoin_dpa"> Make Ethereum Deposit </button>-->
+        <!--  <button type="button" style="float:right" class="btn btn-primary" data-toggle="modal" data-target="#bitcoin_dp"> Make Bitcoin Deposit </button>-->
+        <!--  <br><br>-->
+        <!--</div>-->
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-16 col-md-8">
+    <div class="card">
+      <div class="card-header align-items-start justify-content-between flex">
+        <h4 class="pull-left">Other Deposit Options</h4>
+        <ul class="nav nav-pills card-header-pills pull-right">
+          <li class="nav-item">
+            <button class="btn btn-sm btn-link btn-round" data-toggle="collapse" data-target="#order_depo"><i class="fa fa-chevron-down"></i></button>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body" id="order_depo">
+        <div class="ncard small">
+          <h6>Request other available Deposit Method</h6>
+          <hr>
+          <b>
+            <span style="color:gold"> Once payment is made using this method you are to send your payment
+              proof to our support mail <a href="#"><?php echo e($settings->contact_email); ?></a></span><br>
+            <span style="color:#17a2b8 !important">Once requested, you will receive the payment details via our support mail....
+            </span>
+          </b>
+          <br>
+          <hr>
+          <button type="button" style="float:right" class="btn btn-primary" data-toggle="modal" data-target="#order_deposit"> Processed</button>
+          <br><br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<br><br>
+
+
+</div>
+<!-- Modal Start-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+      </div>
+      <div class="modal-body"> ... </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.dash1', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/complexanalysis/public_html/app.complexanalysis.sbs/resources/views/user/deposits.blade.php ENDPATH**/ ?>

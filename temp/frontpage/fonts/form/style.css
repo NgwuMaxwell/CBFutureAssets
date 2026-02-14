@@ -1,0 +1,52 @@
+h2{
+    text-align: center;
+}
+.recent-investments{
+    display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: nowrap;
+   color: white;
+  text-align: center;
+  }
+  @media screen and (max-width: 500px) {
+  .recent-investments{
+    display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  justify-content: center;
+  }
+ }
+  table, th, td {
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5px;
+    border-right: none;
+border-left: none;
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+table {
+  border-collapse: collapse;
+  margin: 2px;
+}
+.recent-investments-caption{
+  background-color: rgb(75, 75, 75);
+  color: white;
+  font-size: 14pt;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  height: 40px;
+  line-height: 35px;
+  border-radius: 5px;
+  margin: 2px;
+}
+.recent-investments-caption2{
+  background-color: #1ab9fd;
+  color: white;
+  font-size: 14pt;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  height: 40px;
+  line-height: 35px;
+  border-radius: 5px;
+  margin: 2px;
+}

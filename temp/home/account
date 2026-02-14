@@ -1,0 +1,255 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="../favicon.png" type="image/x-icon">
+  <!-- <title>B2Gain | Account </title> -->
+  <link rel="stylesheet" href="vendor/font-awesome-4.7.0/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="vendor/bootstrap-4.1.1/css/bootstrap.css" type="text/css">
+  <link rel="stylesheet" href="css/light_adminux.css" type="text/css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+  </head>
+
+<!-- g-hide -->
+<style type="text/css">iframe.goog-te-banner-frame{ display: none !important;}</style>
+<style type="text/css">body {position: static !important; top:0px !important;}</style>
+<!-- end-g-hide -->
+
+<body oncut="return false" class="menuclose menuclose-right" style="background:gray">
+  <figure class="background"> <img src="img/kk7.gif" alt="b2gain"> </figure>
+
+  <!-- <figure class="background">
+    <video autoplay muted="muted" loop id="myVideo">
+      <source src="bg.mp4" type="video/mp4">
+    </video>
+  </figure> -->
+  <style>
+    #myVideo {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+    }
+  </style>
+
+
+
+  
+
+  <header class="navbar-fixed">
+    <nav class="navbar navbar-toggleable-md sign-in-header">
+      <div class="sidebar-left"> <a class="navbar-brand imglogo" href="index.php"></a> </div>
+      <div class="col"></div>
+      <div class="sidebar-right pull-right">
+        <ul class="navbar-nav  justify-content-end">
+          <li style="margin:4px"><a href="#" class="btn btn-link text-white"></a></li>
+          <li style="margin:4px"><a href="../home" style="background:#253978;color:white" class="btn btn-primary">Home</a></li>
+          <li style="margin:4px"><a href="login" style="background:#253978;color:white" class="btn btn-primary">Login</a></li>
+          <li style="margin:4px"><a href="register" style="background:#253978;color:white" class="btn btn-primary">Register</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <div class="wrapper-content-sign-in p-0">
+
+
+
+        
+  <title>B2Gain | Login</title>
+
+
+<div class="col-md-8 offset-md-8 text-left side_signing_full">
+<form class="form-signin1 full_side text-white " action="" method="POST">
+  <img style="width:60%;height:10%" src="img/logo.png" >
+<span><h3 style="color:crimson;text-align:center"></h3></span>
+<span><h3 style="color:green;text-align:center"></h3></span>
+  <h2 class="tex-black mb-4 font-weight-bold">Sign in</h2>
+  <label  style="color:black" class="font-weight-bold">Username or Email</label>
+  <input style="color:black"  type="text" name="username" class="form-control font-weight-bold" placeholder="Username or Email" value="" required>
+  <span style="color:crimson"></span>
+  <br>
+
+
+
+  <!-- <div class="form-group"> -->
+  <label style="color:black" class="font-weight-bold">Password</label>
+              <div class="input-group">
+                <input style="color:black" type="password" value="" placeholder="Password" name="password"  class="form-control font-weight-bold"  id="pwd" required>
+                <div class="input-group-append">
+                  <span id="eye" onclick="vPwd()" class="input-group-text fa fa-eye-slash"></span>
+                </div>
+              </div>
+  <span style="color:crimson"></span>
+  <!-- <label style="color:black" class="font-weight-bold">Password</label>
+  <input style="color:black" type="password" name="password"  class="form-control font-weight-bold" value="" placeholder="Password" required>
+  <span style="color:crimson"></span> -->
+      <br>
+      <div class="checkbox">
+        <label class="form-check-label " >
+          <input type="checkbox" name="remember" class="form-check-input"  >
+          <i class="fa fa-check"></i></label>
+        Remember me </div>
+  <input type="submit" name="login_btn" style="background:#253978;color:white" class="btn btn-lg btn-primary btn-round" value="Login"><br>
+  <br>
+  <p class="mt-3"><a href="register" class="text-white">Register here!</a> <br>
+    <a  style="color:#0080db" href="forgot" class="">Forgot password?</a></p>
+</form>
+<br>
+</div>  </div>
+
+
+
+
+
+
+  <script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
+  <script src="ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="vendor/bootstrap4beta/js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="vendor/cookie/jquery.cookie.js" type="text/javascript"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="js/ie10-viewport-bug-workaround.js"></script>
+  <script>
+    "use strict";
+    $('input[type="checkbox"]').on('change', function() {
+      $(this).parent().toggleClass("active")
+      $(this).closest(".media").toggleClass("active");
+    });
+    $(window).on("load", function() {
+      /* loading screen */
+      $(".loader_wrapper").fadeOut("slow");
+    });
+  </script>
+
+  
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src="https://embed.tawk.to/6234bc651ffac05b1d7f4751/1fuevvs5c";
+s1.charset="UTF-8";
+s1.setAttribute("crossorigin","*");
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+<style>
+    .mgm {
+        border-radius: 7px;
+        border: 4px solid #253978;
+        position: fixed;
+        z-index: 90;
+        // bottom: 80px;
+        // right: 20px;
+        bottom: 4px;
+        left: 30px;
+        background: #fff;
+        padding: 10px 27px;
+        box-shadow: 0px 5px 13px 0px rgba(0, 0, 0, .3);
+    }
+
+    .mgm a {
+        font-weight: 700;
+        display: block;
+        color: #253978;
+    }
+
+    .mgm a,
+    .mgm a:active {
+        transition: all .2s ease;
+        color: #253978;
+    }
+</style>
+<div class="mgm" style="display: none;">
+<div class="txt" style="color:black;"></div>
+</div>
+
+<script data-cfasync="false" src="#"></script>
+<script type="text/javascript">
+var listCountries = ['South Africa', 'USA', 'Germany', 'France', 'Italy', 'Turkey', 'Australia', 'Brazil', 'Canada', 'Argentina', 'Saudi Arabia', 'Mexico', 'China', 'Mexico', 'Venezuela', 'USA', 'Sweden', 'Italy', 'South Africa', 'Italy', 'USA', 'United Kingdom', 'Italy', 'Greece', 'Cuba', 'USA', 'Portugal', 'Austria', 'Spain', 'Panama', 'South Africa', 'China', 'Netherlands', 'Switzerland', 'Belgium', 'Israel', 'Cyprus'];
+var listPlans = ['$51,000', '$14,500', '$40,000', '$41,000', '$10,000', '$50,000', '$52,300', '$9,700', '$10,000', '$4,500', '$9,500', '$34,000', '$42,000', '$4,600', '$3,700', '$27,500','$58,623','$31,600'];
+var transarray = ['just <b>invested</b>', 'has <b>withdrawn</b>', 'is <b>trading with</b>'];
+
+/*var listCountries = ['UK', 'UK', 'Germany', 'France', 'Italy', 'UK', 'South Africa', 'UK', 'Canada', 'Argentina', 'Saudi Arabia', 'Mexico', 'UK', 'UK', 'UK', 'UK', 'Sweden', 'South Africa', 'UK', 'Italy', 'UK', 'United Kingdom', 'UK', 'Greece', 'Cuba', 'UK', 'Portugal', 'Austria', 'South Africa', 'Panama', 'UK', 'UK', 'Netherlands', 'Switzerland', 'Belgium', 'Israel', 'Cyprus'];
+var listPlans = ['£51,000', '£14,500', '£40,000', '£41,000', '£10,000', '£50,000', '£52,300', '£9,700', '£10,000', '£4,500', '£9,500', '£34,000', '£42,000', '£4,600', '£3,700', '£27,500','£58,623','£31,600'];
+var transarray = ['just <b>invested</b>', 'has <b>withdrawn</b>', 'is <b>trading with</b>'];*/
+interval = Math.floor(Math.random() * (40000 - 8000 + 1) + 8000);
+    var run = setInterval(request, interval);
+
+    function request() {
+        clearInterval(run);
+        interval = Math.floor(Math.random() * (40000 - 8000 + 1) + 8000);
+        var country = listCountries[Math.floor(Math.random() * listCountries.length)];
+        var transtype = transarray[Math.floor(Math.random() * transarray.length)];
+        var plan = listPlans[Math.floor(Math.random() * listPlans.length)];
+        var msg = 'Someone from <b>' + country + '</b> ' + transtype + ' <a href="javascript:void(0);" onclick="javascript:void(0);">' + plan + '</a>';
+        $(".mgm .txt").html(msg);
+        $(".mgm").stop(true).fadeIn(300);
+        window.setTimeout(function() {
+            $(".mgm").stop(true).fadeOut(300);
+        }, 10000);
+        run = setInterval(request, interval);
+    }
+</script>
+
+
+<script>
+let dPwd = false;
+        function vPwd(){
+           let gPwd = $("#pwd");
+            if(dPwd === false){
+                $("#eye").removeClass("fa-eye-slash")
+                $("#eye").addClass("fa-eye")
+                gPwd.attr("type", "text");
+                dPwd = true;
+            }else if(dPwd === true){
+                $("#eye").removeClass("fa-eye")
+                $("#eye").addClass("fa-eye-slash")
+                gPwd.attr("type", "password");
+                dPwd = false;
+            }
+        }
+
+</script>
+ <script>
+        // $(document).ready(function(){
+          // $("body").bind("cut copy paste",function(e){
+          //   e.preventDefault();
+          // })
+          // $("body").on("contextmenu",function(e){
+          //   return false;
+          // });
+        // }) 
+          </script>
+
+        <!-- <body 
+        oncut="return false" oncopy="return false" onpaste="return false"
+        > -->
+<!-- <script>
+        $(document).keydown(function(event){
+          if(event.keyCode == 123){
+            return false;
+          }else if(event.ctrlKey && event.shiftKey && event.keyCode == 73){
+            return false;
+          }
+        })
+        document.addEventListener('contextmenu',event => event.preventDefault())
+</script> -->
+
+</body>
+
+</html>
