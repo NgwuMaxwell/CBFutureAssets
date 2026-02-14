@@ -18,7 +18,7 @@
     <meta property="og:url" content="{{$settings->site_address}}">
     <meta property="og:image" content="{{ asset('storage/app/public/' . $settings->logo) }}">
     <link rel="shortcut icon" href="{{ asset('storage/app/public/' . $settings->favicon) }}" type="image/x-icon">
-    <meta name="twitter:card" conten t="summary_large_image" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="{{$settings->site_name}} - Unlock the Power of Your Finance" />
     <meta name="theme-color" content="#1A5C96" />
     <!-- critical preload -->

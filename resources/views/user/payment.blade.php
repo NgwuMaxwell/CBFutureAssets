@@ -144,8 +144,8 @@
                                                     {{ $payment_mode->network }}
                                                     </small>
                                                 </div>
-                                                                                                                        </div>
-                                                                                                                <div>
+                                            </div>
+                                        </div>
 
                                             @endif
                                         @else
