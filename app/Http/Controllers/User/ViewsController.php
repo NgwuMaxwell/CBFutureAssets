@@ -34,7 +34,20 @@ class ViewsController extends Controller
         if ($user->ref_link == '') {
             User::where('id', $user->id)
                 ->update([
-                    'ref_link' => $settings->site_address . '/ref/' . $user->username,
+                    'ref_link' => $user->dynamic_referral_link,
+                ]);
+        }
+        
+        // Ensure referral_code is set for consistency
+        if (empty($user->referral_code)) {
+            // Generate and set simplified referral code if it doesn't exist
+            $userId = $user->id;
+            $usernamePrefix = substr($user->username, 0, 4);
+            $referralCode = "{$userId}-{$usernamePrefix}";
+            
+            User::where('id', $user->id)
+                ->update([
+                    'referral_code' => $referralCode,
                 ]);
         }
 
@@ -435,7 +448,7 @@ class ViewsController extends Controller
 
 
 
-public function profitReturn($userId)
+public function profitreturn($userId)
 {
     $user = User::findOrFail($userId);
 

@@ -78,13 +78,20 @@ class Controller extends BaseController
 
 
     //Controller self ref issue
-    public function ref(Request $request, $id)
+    public function ref(Request $request, $referralCode)
     {
-        if (isset($id)) {
+        if (isset($referralCode)) {
             $request->session()->flush();
-            if (count(User::where('username', $id)->get()) == 1) {
-                $request->session()->put('ref_by', $id);
+            
+            // Try to find user by the new dynamic referral code format
+            $user = User::getUserByReferralCode($referralCode);
+            
+            if ($user) {
+                $request->session()->put('ref_by', $user->id);
+                // Redirect to register with referral parameter
+                return redirect()->route('register', ['ref' => $referralCode]);
             }
+            
             return redirect()->route('register');
         }
     }

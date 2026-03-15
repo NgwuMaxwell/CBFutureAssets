@@ -82,7 +82,7 @@ class UsersController extends Controller
 
         $referedMembers .= "
                   <tr>
-                  <td> $entry->name $entry->l_name </td>
+                  <td> $entry->name </td>
                   <td> $levelQuote </td>" .
           '<td>' . $this->getUserParent($entry->id) . '</td>' .
           '<td>' . $this->getUserStatus($entry->id) . '</td>
@@ -105,7 +105,7 @@ class UsersController extends Controller
     $user = User::where('id', $id)->first();
     $parent = User::where('id', $user->ref_by)->first();
     if ($parent) {
-      return "$parent->name $parent->l_name";
+      return "$parent->name";
     } else {
       return "null";
     }

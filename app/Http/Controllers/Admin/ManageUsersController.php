@@ -453,12 +453,11 @@ class ManageUsersController extends Controller
         ]);
 
         //assign referal link to user
-        $settings = Settings::where('id', '=', '1')->first();
         $user = User::where('id', $thisid)->first();
 
         User::where('id', $thisid)
             ->update([
-                'ref_link' => $settings->site_address . '/ref/' . $user->username,
+                'ref_link' => $user->dynamic_referral_link,
             ]);
         return redirect()->back()->with('success', 'User created Sucessfully!');
     }

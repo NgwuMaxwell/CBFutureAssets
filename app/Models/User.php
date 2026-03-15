@@ -78,6 +78,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $appends = [
         'profile_photo_url',
+        'referral_code',
+        'dynamic_referral_link',
     ];
 
 
@@ -105,10 +107,76 @@ public function trades()
 {
     return $this->hasMany(Trade::class);
 }
-public function copiedExperts()
-{
-    return $this->hasMany(Copy::class);
-}
+    public function copiedExperts()
+    {
+        return $this->hasMany(Copy::class);
+    }
+
+    /**
+     * Get the referral code for the user
+     *
+     * @return string
+     */
+    public function getReferralCodeAttribute()
+    {
+        // Check if referral code exists in the raw attributes (database)
+        if (!empty($this->attributes['referral_code'])) {
+            return $this->attributes['referral_code'];
+        }
+        
+        // Generate unique referral code: user_id-username_prefix
+        $userId = $this->id;
+        $usernamePrefix = substr($this->username, 0, 4);
+        $referralCode = "{$userId}-{$usernamePrefix}";
+        
+        // Store the referral code in database for consistency
+        self::where('id', $this->id)->update(['referral_code' => $referralCode]);
+        
+        // Update the attribute directly to avoid infinite recursion
+        $this->attributes['referral_code'] = $referralCode;
+        
+        return $referralCode;
+    }
+
+    /**
+     * Generate a dynamic referral link with current domain and unique code
+     *
+     * @return string
+     */
+    public function getDynamicReferralLinkAttribute()
+    {
+        // Ensure referral code exists by accessing the referral_code attribute
+        // This will trigger the getReferralCodeAttribute() method if needed
+        $referralCode = $this->referral_code;
+        
+        // Get current domain with full path including subdirectory
+        $currentDomain = request()->root();
+        
+        return "{$currentDomain}/ref/{$referralCode}";
+    }
+
+    /**
+     * Get referral code from referral link for registration
+     *
+     * @param string $referralCode
+     * @return User|null
+     */
+    public static function getUserByReferralCode($referralCode)
+    {
+        // Parse referral code format: user_id-username_prefix
+        if (preg_match('/^(\d+)-([a-zA-Z0-9]{4})$/', $referralCode, $matches)) {
+            $userId = $matches[1];
+            $usernamePrefix = $matches[2];
+            
+            // Find user by ID and verify username prefix matches
+            $user = self::find($userId);
+            if ($user && substr($user->username, 0, 4) === $usernamePrefix) {
+                return $user;
+            }
+        }
+        
+        return null;
+    }
 
 
     public function tuser()

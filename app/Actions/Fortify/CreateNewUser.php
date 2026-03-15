@@ -57,13 +57,18 @@ class CreateNewUser implements CreatesNewUsers
         }
 
         if (session('ref_by')) {
-            $ref_by = session('ref_by');
-            $user = User::where('username', $ref_by)->first();
-            $ref_by_id = $user->id;
+            $ref_by_id = session('ref_by');
         } else {
             if (!empty($input['ref_by'])) {
+                // Try to find user by username first (backward compatibility)
                 $sponsor = User::where('username', $input['ref_by'])->first();
-                $ref_by_id = $sponsor->id;
+                if ($sponsor) {
+                    $ref_by_id = $sponsor->id;
+                } else {
+                    // Try to find user by the new simplified referral code format
+                    $sponsor = User::getUserByReferralCode($input['ref_by']);
+                    $ref_by_id = $sponsor ? $sponsor->id : NULL;
+                }
             } else {
                 $ref_by_id = NULL;
             }

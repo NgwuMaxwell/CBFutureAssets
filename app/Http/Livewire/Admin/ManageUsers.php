@@ -44,6 +44,7 @@ class ManageUsers extends Component
     public $toptype;
     public $topcolumn = "Bonus";
     public $userTypes = "All";
+    public $ref_by;
 
     protected $rules = [
         'fullname' => 'required|max:255',
@@ -98,10 +99,24 @@ class ManageUsers extends Component
 
         $this->validate();
 
+        // Handle referral code if provided
+        $ref_by_id = NULL;
+        if (!empty($this->ref_by)) {
+            // Try to find user by username first (backward compatibility)
+            $sponsor = User::where('username', $this->ref_by)->first();
+            if ($sponsor) {
+                $ref_by_id = $sponsor->id;
+            } else {
+                // Try to find user by the new simplified referral code format
+                $sponsor = User::getUserByReferralCode($this->ref_by);
+                $ref_by_id = $sponsor ? $sponsor->id : NULL;
+            }
+        }
+
         $thisid = DB::table('users')->insertGetId([
             'name' => $this->fullname,
             'email' => $this->email,
-            'ref_by' => NULL,
+            'ref_by' => $ref_by_id,
             'username' => $this->username,
             'password' => Hash::make($this->password),
             'created_at' => \Carbon\Carbon::now(),
@@ -109,12 +124,11 @@ class ManageUsers extends Component
         ]);
 
         //assign referal link to user
-        $settings = Settings::where('id', '=', '1')->first();
         $user = User::where('id', $thisid)->first();
 
         User::where('id', $thisid)
             ->update([
-                'ref_link' => $settings->site_address . '/ref/' . $user->username,
+                'ref_link' => $user->dynamic_referral_link,
             ]);
 
         session()->flash('success', 'User created Sucessfully!');

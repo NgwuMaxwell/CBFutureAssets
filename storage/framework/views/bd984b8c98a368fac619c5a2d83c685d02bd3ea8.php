@@ -1,4 +1,4 @@
-@php
+<?php
     if (Auth('admin')->User()->dashboard_style == 'light') {
         $text = 'dark';
         $bg = 'light';
@@ -6,17 +6,50 @@
         $bg = 'dark';
         $text = 'light';
     }
-@endphp
+?>
 <div>
     <div class="main-panel">
         <div class="content ">
             <div class="page-inner">
                 <div class="mt-2 mb-4">
-                    <h1 class="title1 themes/purposeTheme/assets/">{{ $settings->site_name }} users list</h1>
+                    <h1 class="title1 themes/purposeTheme/assets/"><?php echo e($settings->site_name); ?> users list</h1>
                 </div>
-                <x-danger-alert />
-                <x-success-alert />
-                <x-error-alert />
+                <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
+<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.danger-alert','data' => []]); ?>
+<?php $component->withName('danger-alert'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
+<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
+<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
+<?php endif; ?>
+                <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
+<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.success-alert','data' => []]); ?>
+<?php $component->withName('success-alert'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
+<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
+<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
+<?php endif; ?>
+                <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
+<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.error-alert','data' => []]); ?>
+<?php $component->withName('error-alert'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
+<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
+<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
+<?php endif; ?>
 
                 <div class="mb-5 row">
                     <div class="col-md-12 ">
@@ -37,7 +70,7 @@
                                     </div>
 
                                     <div class="col-6">
-                                        @if ($checkrecord)
+                                        <?php if($checkrecord): ?>
                                             <div>
                                                 <div class="d-flex">
                                                     <select wire:model='action'
@@ -64,7 +97,7 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                        @else
+                                        <?php else: ?>
                                             <div>
                                                 <button class="float-right btn btn-primary btn-sm" type="button"
                                                     data-toggle="modal" data-target="#adduser">
@@ -73,13 +106,13 @@
                                                     <span class="d-none d-sm-inline-block ms-1">New User</span>
                                                 </button>
 
-                                                <a class="btn btn-info btn-sm " href="{{ route('emailservices') }}">
+                                                <a class="btn btn-info btn-sm " href="<?php echo e(route('emailservices')); ?>">
                                                     <span class="fas fa-envelope"
                                                         data-fa-transform="shrink-3 down-2"></span>
                                                     <span class="d-none d-sm-inline-block ms-1">Send Message</span>
                                                 </a>
                                             </div>
-                                        @endif
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -102,38 +135,39 @@
                                         </thead>
                                         <tbody id="userslisttbl">
 
-                                            @forelse ($users as $user)
+                                            <?php $__empty_1 = true; $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                                 <tr>
                                                     <td class="align-middle">
                                                         <input type="checkbox" wire:model='checkrecord'
-                                                            value="{{ $user->id }}" />
+                                                            value="<?php echo e($user->id); ?>" />
                                                     </td>
-                                                    <td>{{ $user->name }}</td>
-                                                    <td>{{ $user->username }}</td>
-                                                    <td>{{ $user->email }}</td>
-                                                    <td>{{ $user->phone }}</td>
+                                                    <td><?php echo e($user->name); ?></td>
+                                                    <td><?php echo e($user->username); ?></td>
+                                                    <td><?php echo e($user->email); ?></td>
+                                                    <td><?php echo e($user->phone); ?></td>
                                                     <td>
-                                                        @if ($user->status == 'active')
-                                                            <span class='badge badge-success'>{{ $user->status }}</span>
-                                                        @else
-                                                            <span class='badge badge-danger'>{{ $user->status }}</span>
-                                                        @endif
+                                                        <?php if($user->status == 'active'): ?>
+                                                            <span class='badge badge-success'><?php echo e($user->status); ?></span>
+                                                        <?php else: ?>
+                                                            <span class='badge badge-danger'><?php echo e($user->status); ?></span>
+                                                        <?php endif; ?>
                                                     </td>
                                                     <td>
-                                                        {{ $user->created_at->diffForHumans() }}
+                                                        <?php echo e($user->created_at->diffForHumans()); ?>
+
                                                     </td>
                                                     <td>
                                                         <a class='btn btn-secondary btn-sm'
-                                                            href="{{ route('viewuser', $user->id) }}" role='button'>
+                                                            href="<?php echo e(route('viewuser', $user->id)); ?>" role='button'>
                                                             Manage
                                                         </a>
                                                     </td>
                                                 </tr>
-                                            @empty
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                                 <td colspan="9">
                                                     No Data Available
                                                 </td>
-                                            @endforelse
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -165,7 +199,8 @@
                                         </select>
                                     </div>
                                     <div class="col-auto">
-                                        {!! $users->links() !!}
+                                        <?php echo $users->links(); ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +211,7 @@
         </div>
     </div>
 
-    {{-- Modals --}}
+    
     <!-- Modal -->
     <div class="modal fade" tabindex="-1" id="adduser" aria-h6ledby="exampleModalh6" aria-hidden="true">
         <div class="modal-dialog">
@@ -190,8 +225,8 @@
                 </div>
                 <div class="modal-body ">
                     <div>
-                        <form method="POST" action="{{route('createuser')}}">
-                            @csrf
+                        <form method="POST" action="<?php echo e(route('createuser')); ?>">
+                            <?php echo csrf_field(); ?>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <h6 class="themes/purposeTheme/assets/">Username</h6>
@@ -230,7 +265,7 @@
             </div>
         </div>
     </div>
-    {{-- End add user modal --}}
+    
 
     <!-- /Trading History Modal -->
 
@@ -251,9 +286,9 @@
                             <select class="form-control  themes/purposeTheme/assets/" name="plan"
                                 wire:model.defer='plan' required>
                                 <option></option>
-                                @foreach ($plans as $plan)
-                                    <option value="{{ $plan->id }}">{{ $plan->name }}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $plans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $plan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($plan->id); ?>"><?php echo e($plan->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                         <div class="form-group">
@@ -292,7 +327,7 @@
                         <div class="form-group">
                             <input class="form-control  themes/purposeTheme/assets/" placeholder="Enter amount"
                                 type="number" step="any" name="amount" wire:model.defer='topamount' required>
-                            <small>{{ $topamount }}</small>
+                            <small><?php echo e($topamount); ?></small>
                         </div>
                         <div class="form-group">
                             <h5 class="themes/purposeTheme/assets/">Select where to Credit/Debit</h5>
@@ -323,3 +358,4 @@
     </div>
     <!-- /deposit for a plan Modal -->
 </div>
+<?php /**PATH C:\xampp\htdocs\tradexpro\resources\views/livewire/admin/manage-users.blade.php ENDPATH**/ ?>

@@ -172,14 +172,13 @@
                                             </div>
 
 
-                                            @if (Session::has('ref_by'))
                                             <div class="form-group text-start">
-                                                <label class="tx-medium"> Referral ID</label>
+                                                <label class="tx-medium"> Referral ID (Optional)</label>
                                                 <input id="referrer" class="form-control"
-                                                    placeholder="Referral Code (Optional)" type="text"  value="{{ session('ref_by') }}"
-                                                    name="ref_by" required>
+                                                    placeholder="Enter referral code if you have one" type="text"
+                                                    name="ref_by" value="{{ old('ref_by', request('ref')) }}">
+                                                <small class="text-muted">Leave blank if you don't have a referral code</small>
                                             </div>
-                                            @endif
 
 
                                             <div class="form-group text-start">
@@ -238,3 +237,25 @@
 
 
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the referral code from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const refParam = urlParams.get('ref');
+    
+    // If there's a ref parameter in the URL, extract the referral code
+    if (refParam) {
+        // Extract just the referral code part (after the slash)
+        const referralCode = refParam.split('-')[0];
+        
+        // Set the referral input value
+        const referrerInput = document.getElementById('referrer');
+        if (referrerInput) {
+            referrerInput.value = referralCode;
+        }
+    }
+});
+</script>
+@endpush

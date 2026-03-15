@@ -93,7 +93,7 @@
                             </div>
 
                             <strong>or your Referral ID</strong><br>
-                            <h4 class="text-success"> {{ Auth::user()->username }}</h4>
+                            <h4 class="text-success"> {{ Auth::user()->referral_code }}</h4>
                             <h5 class="title1 text-center">
                                 You were referred by
                             </h5>
