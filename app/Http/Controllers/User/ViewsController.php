@@ -92,7 +92,7 @@ class ViewsController extends Controller
 
         $totalProfit = Trade::where('user_id', $user->id)->where('profit_loss', '>', 0)->sum('profit_loss');
         $totalLoss = Trade::where('user_id', $user->id)->where('profit_loss', '<', 0)->sum('profit_loss');
-        $averageProfitLoss = Trade::where('user_id', $user)->where('status', 'closed')->avg('profit_loss');
+        $averageProfitLoss = Trade::where('user_id', $user->id)->where('status', 'closed')->avg('profit_loss');
 
         // Win/Loss Count
         $wins = Trade::where('user_id', $user->id)->where('result', 'WIN')->count();
