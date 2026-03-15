@@ -294,7 +294,7 @@ $dmethods =  $paymethod = Wdmethod::where(function ($query) {
       </li>
 
       <li class=" nav-item"><a href="<?php echo e(route('copyTrading')); ?>" class="nav-link "><i class="fa fa-copy"></i>Copy Experts</a></li>
-      <li class=" nav-item"><a href="<?php echo e(route('mplans')); ?>" class="nav-link "><i class="fas fa-briefcase"></i> Subscribe</a>
+      <li class=" nav-item"><a href="<?php echo e(route('mplans')); ?>" class="nav-link "><i class="fas fa-briefcase"></i> Buy Plan</a>
       </li>
       <li class=" nav-item"><a href="<?php echo e(route('nft.gallery')); ?>" class="nav-link "><i class="fas fa-gem"></i> NFTS</a></li>
       <li class=" nav-item"><a href="<?php echo e(route('user.signal.index')); ?>" class="nav-link "><i class="fa fa-signal"></i> Signal</a></li>
