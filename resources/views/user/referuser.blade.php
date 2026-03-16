@@ -98,7 +98,13 @@
                                 You were referred by
                             </h5>
                             <i class="fa fa-user fa-2x d-block"></i>
-                            <small>{{ $uc->getUserParent($usr) }}</small>
+                            <small>
+                                @if(Auth::user()->referrer)
+                                    {{ Auth::user()->referrer->name }}
+                                @else
+                                    null
+                                @endif
+                            </small>
                         </div>
                         <div class="mt-4 col-md-12">
                             <h6 class="text-left title1">Your Referrals.</h6>

@@ -56,21 +56,17 @@ class CreateNewUser implements CreatesNewUsers
             ])->validate();
         }
 
-        if (session('ref_by')) {
-            $ref_by_id = session('ref_by');
-        } else {
-            if (!empty($input['ref_by'])) {
-                // Try to find user by username first (backward compatibility)
-                $sponsor = User::where('username', $input['ref_by'])->first();
-                if ($sponsor) {
-                    $ref_by_id = $sponsor->id;
-                } else {
-                    // Try to find user by the new simplified referral code format
-                    $sponsor = User::getUserByReferralCode($input['ref_by']);
-                    $ref_by_id = $sponsor ? $sponsor->id : NULL;
-                }
-            } else {
-                $ref_by_id = NULL;
+        // Extract referral code from URL parameter or form input
+        $referralCode = $request->input('ref') ?? $input['ref_by'] ?? null;
+        $ref_by_id = null;
+
+        if ($referralCode) {
+            // Parse format: "210-new1" -> extract "210"
+            $refId = explode('-', $referralCode)[0];
+            $referrer = User::find($refId);
+            
+            if ($referrer) {
+                $ref_by_id = $referrer->id;
             }
         }
 

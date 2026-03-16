@@ -442,10 +442,24 @@ class ManageUsersController extends Controller
             'password' => 'required|min:6',
         ]);
 
+        // Extract referral code and parse to get referrer ID
+        $referralCode = $request->input('ref_by') ?? null;
+        $ref_by_id = null;
+
+        if ($referralCode) {
+            // Parse format: "212-new1" -> extract "212"
+            $refId = explode('-', $referralCode)[0];
+            $referrer = User::find($refId);
+            
+            if ($referrer) {
+                $ref_by_id = $referrer->id;
+            }
+        }
+
         $thisid = DB::table('users')->insertGetId([
             'name' => $request['name'],
             'email' => $request['email'],
-            'ref_by' => NULL,
+            'ref_by' => $ref_by_id,
             'username' => $request['username'],
             'password' => Hash::make($request->password),
             'created_at' => \Carbon\Carbon::now(),
