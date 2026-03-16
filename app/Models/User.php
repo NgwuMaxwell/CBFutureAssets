@@ -139,6 +139,26 @@ public function trades()
     }
 
     /**
+     * Get the user who referred this user (referrer/parent)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function referrer()
+    {
+        return $this->belongsTo(User::class, 'ref_by');
+    }
+
+    /**
+     * Get the users referred by this user (referrals/children)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function referrals()
+    {
+        return $this->hasMany(User::class, 'ref_by');
+    }
+
+    /**
      * Generate a dynamic referral link with current domain and unique code
      *
      * @return string

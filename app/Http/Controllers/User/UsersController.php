@@ -102,10 +102,9 @@ class UsersController extends Controller
   //Get user Parent
   function getUserParent($id)
   {
-    $user = User::where('id', $id)->first();
-    $parent = User::where('id', $user->ref_by)->first();
-    if ($parent) {
-      return "$parent->name";
+    $user = User::find($id);
+    if ($user && $user->referrer) {
+      return $user->referrer->name;
     } else {
       return "null";
     }
@@ -114,16 +113,14 @@ class UsersController extends Controller
   //Get user status
   function getUserStatus($id)
   {
-    $user = User::where('id', $id)->first();
-
+    $user = User::find($id);
     return $user->status;
   }
 
   //Get User Registration Date
   function getUserRegDate($id)
   {
-    $user = User::where('id', $id)->first();
-
+    $user = User::find($id);
     return $user->created_at;
   }
 }
