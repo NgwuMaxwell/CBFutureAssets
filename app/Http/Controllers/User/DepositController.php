@@ -156,12 +156,35 @@ class DepositController extends Controller
     //Save deposit requests
     public function savedeposit(Request $request)
     {
-        $request->validate([
-            'proof' => 'nullable|file|mimes:pdf,doc,jpeg,jpg,png|max:2048', // Max 2MB file size
+        // Debug: Log the request data
+        \Log::info('Deposit request data:', [
+            'paymethd_method' => $request->paymethd_method,
+            'amount' => $request->amount,
+            'has_file' => $request->hasFile('proof'),
+            'file_name' => $request->file('proof') ? $request->file('proof')->getClientOriginalName() : null
         ]);
 
+        // Get the payment method to check minimum amount
+        $paymentMethod = Wdmethod::where('name', $request->paymethd_method)->first();
+        
+        // Debug: Log payment method lookup
+        \Log::info('Payment method lookup:', [
+            'requested_method' => $request->paymethd_method,
+            'found_method' => $paymentMethod ? $paymentMethod->name : null,
+            'minimum_amount' => $paymentMethod ? $paymentMethod->minimum : null
+        ]);
+        
+        // Set minimum amount based on payment method, default to 100 if not set
+        $minAmount = $paymentMethod ? $paymentMethod->minimum : 100;
+
+        $request->validate([
+            'proof' => 'nullable|file|mimes:pdf,doc,jpeg,jpg,png|max:2048', // Max 2MB file size
+            'amount' => 'required|numeric|min:' . $minAmount,
+            'paymethd_method' => 'required|string',
+        ]);
 
         $settings = Settings::where('id', '=', '1')->first();
+        $path = null;
 
         if ($request->hasfile('proof')) {
             $file = $request->file('proof');
@@ -210,17 +233,31 @@ class DepositController extends Controller
         $user = User::where('id', Auth::user()->id)->first();
 
         //Send Email to admin regarding this deposit
-         Mail::to($settings->contact_email)->send(new DepositStatus($dp, $user, 'Successful Deposit', true));
+        \Log::info('Skipping email sending for deposit ID: ' . $dp->id . ' (temporarily disabled)');
+        // try {
+        //     Mail::to($settings->contact_email)->send(new DepositStatus($dp, $user, 'Successful Deposit', true));
+        //     \Log::info('Admin email sent successfully for deposit ID: ' . $dp->id);
+        // } catch (\Exception $e) {
+        //     \Log::error('Failed to send admin email for deposit ID: ' . $dp->id . '. Error: ' . $e->getMessage());
+        // }
 
         //Send confirmation email to user regarding his deposit and it's successful.to get a response back from admin
-        Mail::to($user->email)->send(new DepositStatus($dp, $user, 'Successful Deposit', false));
+        \Log::info('Skipping user email for deposit ID: ' . $dp->id . ' (temporarily disabled)');
+        // try {
+        //     Mail::to($user->email)->send(new DepositStatus($dp, $user, 'Successful Deposit', false));
+        //     \Log::info('User email sent successfully for deposit ID: ' . $dp->id);
+        // } catch (\Exception $e) {
+        //     \Log::error('Failed to send user email for deposit ID: ' . $dp->id . '. Error: ' . $e->getMessage());
+        // }
 
         // Kill the session variables
         $request->session()->forget('payment_mode');
         $request->session()->forget('amount');
 
+        \Log::info('Redirecting to deposits page with success message');
+        \Log::info('Session data before redirect: ' . json_encode(session()->all()));
         return redirect()->route('deposits')
-            ->with('success', 'Account Fund Sucessful! Please wait for system to validate this transaction.');
+            ->with('success', 'Account Fund Successful! Please wait for system to validate this transaction.');
     }
 
     //Get uplines

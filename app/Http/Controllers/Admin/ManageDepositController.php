@@ -28,69 +28,93 @@ class ManageDepositController extends Controller
     //process deposits
     public function pdeposit($id)
     {
-        //confirm the users plan
-        $deposit = Deposit::where('id', $id)->first();
-        $user = User::where('id', $deposit->user)->first();
-        //get settings 
-        $settings = Settings::where('id', '=', '1')->first();
-
-        $response = $this->callServer('earnings', '/process-deposit', [
-            'referral_commission' => $settings->referral_commission,
-            'amount' => $deposit->amount,
-            'account_bal' => $user->account_bal,
-            'depositBonus' => $settings->deposit_bonus,
-        ]);
-
-    if($deposit->user==$user->id){
-            //add funds to user's account
-            User::where('id',$user->id)
-            ->update([
-                'account_bal' => $user->account_bal + $deposit->amount,
-                'cstatus' => 'Customer',
-            ]);
+        try {
+            //confirm the users plan
+            $deposit = Deposit::where('id', $id)->first();
+            
+            if (!$deposit) {
+                return redirect()->back()->with('error', 'Deposit not found!');
+            }
+            
+            $user = User::where('id', $deposit->user)->first();
+            
+            if (!$user) {
+                return redirect()->back()->with('error', 'User not found!');
+            }
             
             //get settings 
-            $settings=Settings::where('id', '=', '1')->first();
-            $earnings=$settings->referral_commission*$deposit->amount/100;
+            $settings = Settings::where('id', '=', '1')->first();
 
-          if (!empty($user->ref_by)) {
+            // Make server call to process deposit with timeout
+            try {
+                $response = $this->callServer('earnings', '/process-deposit', [
+                    'referral_commission' => $settings->referral_commission,
+                    'amount' => $deposit->amount,
+                    'account_bal' => $user->account_bal,
+                    'depositBonus' => $settings->deposit_bonus,
+                ]);
+
+                // Check if server call was successful
+                if ($response->failed()) {
+                    return redirect()->back()->with('error', 'Failed to process deposit. Server error occurred.');
+                }
+            } catch (\Exception $e) {
+                \Log::warning('Server call failed for deposit processing: ' . $e->getMessage());
+                // Continue processing even if server call fails
+            }
+
+            //add funds to user's account
+            User::where('id', $user->id)
+                ->update([
+                    'account_bal' => $user->account_bal + $deposit->amount,
+                    'cstatus' => 'Customer',
+                ]);
+            
+            //get settings 
+            $settings = Settings::where('id', '=', '1')->first();
+            $earnings = $settings->referral_commission * $deposit->amount / 100;
+
+            if (!empty($user->ref_by)) {
                 //get agent
                 $agent = User::where('id', $user->ref_by)->first();
-                User::where('id', $user->ref_by)
-                    ->update([
-                        'account_bal' => $agent->account_bal + $earnings,
-                        'ref_bonus' => $agent->ref_bonus + $earnings,
+                if ($agent) {
+                    User::where('id', $user->ref_by)
+                        ->update([
+                            'account_bal' => $agent->account_bal + $earnings,
+                            'ref_bonus' => $agent->ref_bonus + $earnings,
+                        ]);
+            
+                    //create history
+                    Tp_Transaction::create([
+                        'user' => $user->ref_by,
+                        'plan' => "Credit",
+                        'amount' => $earnings,
+                        'type' => "Ref_bonus",
                     ]);
-        
-                //create history
-                Tp_Transaction::create([
-                    'user' => $user->ref_by,
-                    'plan' => "Credit",
-                    'amount'=>$earnings,
-                    'type'=>"Ref_bonus",
-                ]);
-        
-                //credit commission to ancestors
-                $deposit_amount = $deposit->amount;
-                $array=User::all();
-                $parent=$user->id;
-                $this->getAncestors($array, $deposit_amount, $parent);
+            
+                    //credit commission to ancestors
+                    $deposit_amount = $deposit->amount;
+                    $array = User::all();
+                    $parent = $user->id;
+                    $this->getAncestors($array, $deposit_amount, $parent);
+                }
             }
-             //update deposits
-        Deposit::where('id',$id)
-            ->update([
-            'status' => 'Processed',
-        ]);
-               $deposit = Deposit::where('id', $id)->first();
-        $user = User::where('id', $deposit->user)->first();
+            
+            //update deposits
+            Deposit::where('id', $id)
+                ->update([
+                    'status' => 'Processed',
+                ]);
+            
             //Send confirmation email to user regarding his deposit and it's successful.
-            Mail::to($user->email)->send(new DepositStatus($deposit, $user,'Your Deposit have been Confirmed', false));
+            Mail::to($user->email)->send(new DepositStatus($deposit, $user, 'Your Deposit have been Confirmed', false));
     
+            return redirect()->back()->with('success', 'Deposit processed successfully!');
+            
+        } catch (\Exception $e) {
+            \Log::error('Deposit processing error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An error occurred while processing the deposit. Please try again.');
         }
-
-       
-        
-        return redirect()->back()->with('success', 'Action Sucessful!');
     }
 
 

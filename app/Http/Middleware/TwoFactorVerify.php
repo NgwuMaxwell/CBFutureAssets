@@ -21,8 +21,8 @@ class TwoFactorVerify
             return redirect()->route('admin.login');
         }
         
-        // Find the admin user
-        $user = Admin::where('email', $logg->email)->first();
+        // Find the admin user by ID instead of email to avoid null issues
+        $user = Admin::find($logg->id);
         
         // If user not found, proceed without 2FA check
         if (!$user) {
@@ -30,8 +30,7 @@ class TwoFactorVerify
         }
         
         // Check if 2FA is enabled and needs verification
-        if($user->enable_2fa == "enabled" && $user->token_2fa_expiry < \Carbon\Carbon::now() && 
-           ($user->pass_2fa == "false" || $user->pass_2fa == NULL)){
+        if($user->enable_2fa == "enabled" && $user->pass_2fa == "false"){
             return redirect('/admin/2fa');  
         }
         

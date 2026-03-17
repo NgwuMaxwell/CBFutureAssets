@@ -15,15 +15,15 @@ if (Auth('admin')->User()->dashboard_style == "light") {
         <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('admin.manage-users', [])->html();
-} elseif ($_instance->childHasBeenRendered('R6JoZSj')) {
-    $componentId = $_instance->getRenderedChildComponentId('R6JoZSj');
-    $componentTag = $_instance->getRenderedChildComponentTagName('R6JoZSj');
+} elseif ($_instance->childHasBeenRendered('3lJuAkA')) {
+    $componentId = $_instance->getRenderedChildComponentId('3lJuAkA');
+    $componentTag = $_instance->getRenderedChildComponentTagName('3lJuAkA');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('R6JoZSj');
+    $_instance->preserveRenderedChild('3lJuAkA');
 } else {
     $response = \Livewire\Livewire::mount('admin.manage-users', []);
     $html = $response->html();
-    $_instance->logRenderedChild('R6JoZSj', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('3lJuAkA', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>

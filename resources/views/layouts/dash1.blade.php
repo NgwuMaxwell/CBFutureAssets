@@ -427,7 +427,7 @@ $dmethods =  $paymethod = Wdmethod::where(function ($query) {
               <label for="amount" class="input-group-text">
                 Amount : {{$settings->currency}}             </label>
             </div>
-            <input type="number" name="amount" step="0.01" class="form-control" min="100" id="amount" placeholder="0" required="" field_signature="498263276" form_signature="14518198629138701334" visibility_annotation="false">
+            <input type="number" name="amount" step="0.01" class="form-control" min="1" id="amount" placeholder="0" required="" field_signature="498263276" form_signature="14518198629138701334" visibility_annotation="false">
           </div>
           <hr>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -582,7 +582,7 @@ $dmethods =  $paymethod = Wdmethod::where(function ($query) {
               <label for="amount" class="input-group-text">
                 Amount : $              </label>
             </div>
-            <input type="number" name="amount" step="0.01" class="form-control" min="100" id="amount" placeholder="0" required="" field_signature="498263276" form_signature="14518198629138701334" visibility_annotation="false">
+            <input type="number" name="amount" step="0.01" class="form-control" min="{{ $item->minimum }}" id="amount" placeholder="0" required="" field_signature="498263276" form_signature="14518198629138701334" visibility_annotation="false">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <input type="hidden" name="mode" value="{{ $item['name'] }}">
           </div>
