@@ -98,7 +98,14 @@
                                 You were referred by
                             </h5>
                             <i class="fa fa-user fa-2x d-block"></i>
-                            <small><?php echo e($uc->getUserParent($usr)); ?></small>
+                            <small>
+                                <?php if(Auth::user()->referrer): ?>
+                                    <?php echo e(Auth::user()->referrer->name); ?>
+
+                                <?php else: ?>
+                                    null
+                                <?php endif; ?>
+                            </small>
                         </div>
                         <div class="mt-4 col-md-12">
                             <h6 class="text-left title1">Your Referrals.</h6>

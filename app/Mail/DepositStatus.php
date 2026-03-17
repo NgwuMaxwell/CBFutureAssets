@@ -4,6 +4,7 @@ namespace App\Mail;
 
 use App\Models\Deposit;
 use App\Models\User;
+use App\Models\Settings;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -11,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 class DepositStatus extends Mailable
 {
     use Queueable, SerializesModels;
-    public $deposit, $subject, $user;
+    public $deposit, $subject, $user, $settings;
     public $foramin;
 
     /**
@@ -25,6 +26,7 @@ class DepositStatus extends Mailable
         $this->user = $user;
         $this->foramin = $foramin;
         $this->subject = $subject;
+        $this->settings = Settings::where('id', '1')->first();
     }
 
     /**

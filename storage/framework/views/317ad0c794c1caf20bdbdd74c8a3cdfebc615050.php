@@ -86,15 +86,15 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('admin.software-module', [])->html();
-} elseif ($_instance->childHasBeenRendered('hvlBUyo')) {
-    $componentId = $_instance->getRenderedChildComponentId('hvlBUyo');
-    $componentTag = $_instance->getRenderedChildComponentTagName('hvlBUyo');
+} elseif ($_instance->childHasBeenRendered('QtVAQ6p')) {
+    $componentId = $_instance->getRenderedChildComponentId('QtVAQ6p');
+    $componentTag = $_instance->getRenderedChildComponentTagName('QtVAQ6p');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('hvlBUyo');
+    $_instance->preserveRenderedChild('QtVAQ6p');
 } else {
     $response = \Livewire\Livewire::mount('admin.software-module', []);
     $html = $response->html();
-    $_instance->logRenderedChild('hvlBUyo', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('QtVAQ6p', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
