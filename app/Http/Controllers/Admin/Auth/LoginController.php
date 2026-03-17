@@ -106,7 +106,7 @@ class LoginController extends Controller
             ->with('message','You are Logged in as Admin!');
         }else {
             return redirect()
-            ->route('adminloginform')
+            ->to('/admin/login')
             ->with('message','Not allowed');
         }
     }
@@ -122,7 +122,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()
-            ->route('adminloginform')
+            ->to('/admin/login')
             ->with('status','Admin has been logged out!');
     }
 
