@@ -111,10 +111,10 @@
             <div class=""
             style="width:100%; max-width: 100%; background-color: #262b3e; border-radius: 10px; color: #fff; padding: 10px; font-size: 14px; margin-bottom: 10px">
                 <div class="">
-                    <p style="color: #fff; font-size: 18px">Withdrawal in Progress</p>
+                    <p style="color: #fff; font-size: 18px">Withdrawal Request Submitted</p>
                     <br>
-                    <p style="color: #fff;"><?php echo e(Auth::user()->step == 1? '25' : (Auth::user()->step == 2? '99' : (Auth::user()->step == 3? '70' : (Auth::user()->step== 4?  '85' : '99')))); ?>% Completed</p>
-                    <progress style="width: 100%" value="<?php echo e(Auth::user()->step== 1? '25' : (Auth::user()->step == 2? '99' : (Auth::user()->step == 3? '70' : (Auth::user()->step == 4?  '85' : '99')))); ?>" max="100" />
+                    <p style="color: #fff;">Your withdrawal request has been successfully submitted and is being processed.</p>
+                    <progress style="width: 100%" value="100" max="100" />
                 </div>
             </div>
 
@@ -131,39 +131,12 @@
 
       <strong>Important Notice: </strong>
 
-
-      <?php if(Auth::user()->step == 1): ?>
-    For the successful processing of your withdrawal request, a broker commission fee code is required. This unique confirmation code ensures the secure and efficient transfer of your funds. Kindly provide your broker commission fee code to proceed with the withdrawal process. Should you have any questions or need assistance, please do not hesitate to reach out to our support team. Thank you for your cooperation and understanding.
-<?php elseif(Auth::user()->step == 2): ?>
-    Anti-Theft security code is required. Please provide your unique security code before withdrawals can be processed.
-<?php elseif(Auth::user()->step == 3): ?>
-    International Monetary Fund code is required. Please provide your payment confirmation code to proceed.
-<?php elseif(Auth::user()->step == 4): ?>
-    Cost of Transfer code is required. Please provide your COT code to proceed.
-<?php else: ?>
-    Taxation code is required. Please provide your Taxation code to conclude your withdrawal.
-<?php endif; ?>
+      Your withdrawal request has been successfully submitted! Please wait while we process your request. You will receive a notification once your withdrawal has been completed.
 
 </p>
 
 
-<form action="<?php echo e(route('brokercode')); ?>" method="POST">
-     <?php echo csrf_field(); ?>
-
-              <div class="">
-
-
-
-                        <div class="form-group ">
-                            <label></label>
-                            <input class="form-control" style="height: 3.25rem; border-radius: 0px; border: 1px solid #ccc; font-family: 'Montserrat', sans-serif"
-                            placeholder="* * * * * *" type="number" value="" name="pin" id="pin" required>
-                            <span class="help-block"></span>
-                        </div>
-
-                        <input type="hidden" value="<?php echo e(Auth::user()->step); ?>" name="step">
-						<a href="<?php echo e(route('withdrawalsdeposits')); ?>" class="btn btn-warning btn-lg" style="width: 100%; max-width: 200px;">Return</a>
-					<input type="submit" value="Verify" name="submit" class="btn btn-success btn-lg" style="width: 100%; max-width: 200px;">
+						<a href="<?php echo e(route('withdrawalsdeposits')); ?>" class="btn btn-warning btn-lg" style="width: 100%; max-width: 200px;">Return to Withdrawals</a>
 					</div>
                     </form>
 
