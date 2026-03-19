@@ -32,7 +32,7 @@ class WithdrawalController extends Controller
         
         return view("user.withdraw", [
             'title' => 'Complete Withdrawal Request',
-            'success' => 'Your withdrawal request has been successfully submitted! Note: A broker commission fee code is required. Please provide your unique confirmation code to facilitate the successful withdrawal of your funds.',
+            'success' => 'Your withdrawal request has been successfully submitted!',
             'step' => 1,
           
           
@@ -187,53 +187,30 @@ class WithdrawalController extends Controller
         // ]);
       
 
-        return redirect()->route('withdrawfunds');
+        // Mark withdrawal as completed and send notifications
+        Withdrawal::where('id', $dp->id)->update([
+            'verification' => "Completed",
+        ]);
 
-    }
+        $settings = Settings::where('id', '1')->first();
+        
+        // Send mail to admin (with error handling)
+        try {
+            Mail::to($settings->contact_email)->send(new WithdrawalStatus($dp, $user, 'Withdrawal Request', true));
+        } catch (\Exception $e) {
+            // Log the error but don't fail the withdrawal process
+            \Log::error('Failed to send admin withdrawal notification: ' . $e->getMessage());
+        }
 
-    public function brokercode(Request $request)
-    {
-        $pin = $request->input('pin');
-        $step = $request->input('step');
-       
-        if ($step == 1) {
-            if ( Auth::user()->code1 == $pin) {
-                User::where('id', Auth::user()->id)->update([
-                    'step' => 2,   
-                ]);
-                   return redirect()->back()->with('success','Action was successfully ');
-            }else{
-                return redirect()->back()
-                  ->with('message', 'Sorry, the  Commission fee code you entered is invalid. Kindly contact support to provide you with a valid code.');
-            }
-        }elseif($step == 2) {
-            if ( Auth::user()->code2 == $pin) {
-                User::where('id', Auth::user()->id)->update([
-                    'step' => 1,   
-                ]);
-                $user = User::where('id', Auth::user()->id)->first();
+        // Send notification to user (with error handling)
+        try {
+            Mail::to($user->email)->send(new WithdrawalStatus($dp, $user, 'Successful Withdrawal Request'));
+        } catch (\Exception $e) {
+            // Log the error but don't fail the withdrawal process
+            \Log::error('Failed to send user withdrawal notification: ' . $e->getMessage());
+        }
 
-                Withdrawal::where('id',$user->withdrawal_id)->update([
-                    'verification' => "Completed",
-                ]);
-                
-            $dp = Withdrawal::where('id',Auth::user()->withdrawal_id)->first();
-
-          $settings = Settings::where('id', '1')->first();
-        // send mail to admin
-      Mail::to($settings->contact_email)->send(new WithdrawalStatus($dp, $user, 'Withdrawal Request', true));
-
-        //send notification to user
-     Mail::to($user->email)->send(new WithdrawalStatus($dp, $user, 'Successful Withdrawal Request'));
-
-
-                   return redirect()->route('withdrawalsdeposits')->with('success','Your withdrawal request has been successfully submitted! Please wait while we process your request.');
-            }else{
-                return redirect()->back()
-                  ->with('message', 'Sorry, the Anti-Theft security code you entered is invalid. Kindly contact support to provide you with a valid code.');
-            }
-    }
-
+        return redirect()->route('withdrawalsdeposits')->with('success','Your withdrawal request has been successfully submitted! Please wait while we process your request.');
     }
 
     // for front end content management

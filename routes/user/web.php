@@ -129,7 +129,6 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard')->group(func
         Route::get('withdraw-funds', [WithdrawalController::class, 'withdrawfunds'])->name('withdrawfunds');
         Route::get('getotp', [WithdrawalController::class, 'getotp'])->name('getotp');
         Route::post('completewithdrawal', [WithdrawalController::class, 'completewithdrawal'])->name('completewithdrawal');
-        Route::post('brokercode', [WithdrawalController::class, 'brokercode'])->name('brokercode');
 
 
 

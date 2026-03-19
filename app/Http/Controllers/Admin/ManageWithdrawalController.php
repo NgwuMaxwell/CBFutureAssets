@@ -49,8 +49,13 @@ class ManageWithdrawalController extends Controller
             
       $withdrawal=Withdrawal::where('id',$request->id)->first();
             
-                 //send notification to user
-     Mail::to($user->email)->send(new WithdrawalStatus( $withdrawal, $user, 'Withdrawal Approved'));
+                 //send notification to user (with error handling)
+        try {
+            Mail::to($user->email)->send(new WithdrawalStatus( $withdrawal, $user, 'Withdrawal Approved'));
+        } catch (\Exception $e) {
+            // Log the error but don't fail the withdrawal process
+            \Log::error('Failed to send withdrawal approval notification: ' . $e->getMessage());
+        }
      
         }else {
 
@@ -69,7 +74,12 @@ class ManageWithdrawalController extends Controller
                 'status' => 'Rejected',
             ]);
                 if ($request->emailsend == "true") {
-                    Mail::to($user->email)->send(new NewNotification($request->reason,$request->subject, $user->name));
+                    try {
+                        Mail::to($user->email)->send(new NewNotification($request->reason,$request->subject, $user->name));
+                    } catch (\Exception $e) {
+                        // Log the error but don't fail the withdrawal process
+                        \Log::error('Failed to send withdrawal rejection notification: ' . $e->getMessage());
+                    }
                 }
 
               }
