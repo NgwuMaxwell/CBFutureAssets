@@ -63,7 +63,7 @@
         <div class="row  align-items-center p-2">
           <figure class="social-profile-pic"><img src="{{ asset('storage/app/public/photos/' . Auth::user()->profile_photo_path) }}" alt=""></figure>
           <div class="col-sm-16 col-lg-4 col-xl-4  profile-name">
-            <i style="color:#0f0;font-size:20px" class="fa fa-check-circle blink_me"> {{ Auth::user()->account_verify=="Verified" ? 'Verified' : 'Not Verified' }}</i>            <h2>{{Auth::user()->name}}</h2>
+            <i style="color:#0f0;font-size:20px" class="fa fa-check-circle blink_me"> {{ (Auth::user()->account_verify == 'Verified' || Auth::user()->email_verified_at) ? 'Verified' : 'Not Verified' }}</i>            <h2>{{Auth::user()->name}}</h2>
             <p>{{ Auth::user()->email }}</p>
           </div>
           <div class="col-16 col-sm-16 col-lg-9 col-xl-9 text-right d-flex">
@@ -214,7 +214,7 @@
               <label><i class="fa fa-address-card"></i> Account Status</label><br>
               <!-- <label class="text-primary" for="">Verified</label> -->
               <label class="text-primary" for="">
-                <i style="color:#0f0;font-size:20px" class="fa fa-check-circle blink_me">  {{ Auth::user()->account_verify=="Verified" ? 'Verified' : 'Not Verified' }}</i>     </label>
+                <i style="color:#0f0;font-size:20px" class="fa fa-check-circle blink_me">  {{ (Auth::user()->account_verify == 'Verified' || Auth::user()->email_verified_at) ? 'Verified' : 'Not Verified' }}</i>     </label>
               <label><i class="fa fa-sync"></i> Account Type</label><br>
 
               @php
