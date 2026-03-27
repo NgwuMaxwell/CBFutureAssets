@@ -126,7 +126,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
 @endsection
 @section('scripts')
     @parent
-    <script src="https://cdn.ckeditor.com/4.25.1-lts/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.25.1/full/ckeditor.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('.ckeditor').ckeditor();
