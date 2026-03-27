@@ -85,7 +85,7 @@
     <div class="activity-block  success">
       <div class="media">
         <div class="media-body">
-          <h5 class="font-weight-bold"><span class=""><?php echo e($settings->currency); ?><?php echo e(number_format(Auth::user()->account_bal, 2, '.', ',')); ?></span></h5>
+          <h5 class="font-weight-bold"><span class=""><?php echo e($settings->currency); ?><?php echo e(number_format(Auth::user()->total_balance, 2, '.', ',')); ?></span></h5>
           <p>Total Balance</p>
         </div>
         <i class="fa fa-chart-bar"></i>
@@ -136,7 +136,7 @@
     <div class="activity-block  success">
       <div class="media">
         <div class="media-body">
-          <h5 class="font-weight-bold"><span class=""><i style="color:#0f0;font-size:20px" class="fa <?php echo e(Auth::user()->account_verify== "Verified"? 'fa-check-circle' : 'fa-times-circle'); ?>  blink_me">   <small><?php echo e(Auth::user()->account_verify=="Verified" ? 'Verified' : 'Unverified'); ?></small> </span> </button></i></span></h5>
+          <h5 class="font-weight-bold"><span class=""><i style="color:#0f0;font-size:20px" class="fa <?php echo e((Auth::user()->account_verify == 'Verified' || Auth::user()->email_verified_at) ? 'fa-check-circle' : 'fa-times-circle'); ?>  blink_me">   <small><?php echo e((Auth::user()->account_verify == 'Verified' || Auth::user()->email_verified_at) ? 'Verified' : 'Unverified'); ?></small> </span> </button></i></span></h5>
           <p>Account Status</p>
         </div>
         <i class="fa fa-address-card"></i>
