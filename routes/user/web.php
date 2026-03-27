@@ -26,7 +26,7 @@ use App\Http\Controllers\User\TradeController;
 use Illuminate\Support\Facades\Route;
 
 // Email verification routes
-Route::get('/verify-email', 'App\Http\Controllers\User\UsersController@verifyemail')->middleware('auth')->name('verification.notice');;
+Route::get('/verify-email', 'App\Http\Controllers\User\UsersController@verifyemail')->middleware('auth');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
@@ -94,7 +94,7 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard')->group(func
         Route::get('technical', [ViewsController::class, 'technical'])->name('technical');
         Route::get('purchase', [ViewsController::class, 'purchase'])->name('purchase');
         Route::get('chart',[ViewsController::class, 'chart'])->name('chart');
-        Route::get('calendar',[ViewsController::class, 'calendar'])->name('calendar');
+        Route::get('calendar',[ViewsController::class, 'calendar'])->name('user.calendar');
 
 
         // Update withdrawal info

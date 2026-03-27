@@ -64,7 +64,7 @@
     <div class="activity-block  success">
       <div class="media">
         <div class="media-body">
-          <h5 class="font-weight-bold"><span class="">{{$settings->currency}}{{ number_format(Auth::user()->account_bal, 2, '.', ',')}}</span></h5>
+          <h5 class="font-weight-bold"><span class="">{{$settings->currency}}{{ number_format(Auth::user()->total_balance, 2, '.', ',')}}</span></h5>
           <p>Total Balance</p>
         </div>
         <i class="fa fa-chart-bar"></i>

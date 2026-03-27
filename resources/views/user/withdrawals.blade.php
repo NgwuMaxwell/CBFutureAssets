@@ -103,6 +103,17 @@ $dmethods =  $paymethod = Wdmethod::where(function ($query) {
                         <div class="row">
                             <div class="col-sm-16 col-md-8 col-lg-6">
                                 <div class="form-group">
+                                    <label class="form-control-label">Select Wallet to Withdraw From</label>
+                                    <select name="wallet_type" class="form-control" required>
+                                        <option disabled="" selected="" value=""> -- select wallet -- </option>
+                                        @foreach(Auth::user()->getAvailableWallets() as $walletKey => $wallet)
+                                            <option value="{{ $walletKey }}" data-balance="{{ $wallet['balance'] }}">
+                                                {{ $wallet['name'] }} ({{ $settings->currency }}{{ number_format($wallet['balance'], 2) }})
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label class="form-control-label">Withdrawal Type</label>
                                     <select onchange="methodCheck(this)" name="method" value="" class="form-control" required>
                                         <option disabled="" selected="" value=""> -- select withdrawal method -- </option>

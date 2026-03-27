@@ -125,6 +125,17 @@ $dmethods =  $paymethod = Wdmethod::where(function ($query) {
                         <div class="row">
                             <div class="col-sm-16 col-md-8 col-lg-6">
                                 <div class="form-group">
+                                    <label class="form-control-label">Select Wallet to Withdraw From</label>
+                                    <select name="wallet_type" class="form-control" required>
+                                        <option disabled="" selected="" value=""> -- select wallet -- </option>
+                                        <?php $__currentLoopData = Auth::user()->getAvailableWallets(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $walletKey => $wallet): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($walletKey); ?>" data-balance="<?php echo e($wallet['balance']); ?>">
+                                                <?php echo e($wallet['name']); ?> (<?php echo e($settings->currency); ?><?php echo e(number_format($wallet['balance'], 2)); ?>)
+                                            </option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label class="form-control-label">Withdrawal Type</label>
                                     <select onchange="methodCheck(this)" name="method" value="" class="form-control" required>
                                         <option disabled="" selected="" value=""> -- select withdrawal method -- </option>

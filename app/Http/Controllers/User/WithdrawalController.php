@@ -143,11 +143,23 @@ class WithdrawalController extends Controller
         $ui = $user->id;
 
         if ($settings->deduction_option == "userRequest") {
-            //debit user
-            User::where('id', $user->id)->update([
-                'account_bal' => $user->account_bal - $to_withdraw,
-                'withdrawotp' => NULL,
-            ]);
+            //debit user from selected wallet
+            $walletType = $request->wallet_type;
+            
+            // Validate wallet type
+            if (!in_array($walletType, ['account_bal', 'investment_wallet', 'earnings_wallet', 'referral_wallet'])) {
+                return redirect()->back()
+                    ->with('message', 'Invalid wallet selection.');
+            }
+            
+            // Check if user has sufficient balance in selected wallet
+            if ($user->$walletType < $to_withdraw) {
+                return redirect()->back()
+                    ->with('message', 'Insufficient balance in selected wallet.');
+            }
+            
+            // Debit from selected wallet
+            $user->debitWallet($walletType, $to_withdraw);
         }
 
         if ($settings->withdrawal_option == "auto" and ($request->method == 'Bitcoin' or $request->method  == 'Litecoin' or $request->method  == 'Ethereum' or $request->method == 'USDT')) {

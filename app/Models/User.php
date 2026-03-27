@@ -80,7 +80,88 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_url',
         'referral_code',
         'dynamic_referral_link',
+        'total_balance',
     ];
+
+    /**
+     * Get the total balance (sum of all wallets)
+     *
+     * @return float
+     */
+    public function getTotalBalanceAttribute()
+    {
+        return $this->account_bal + $this->investment_wallet + $this->earnings_wallet + $this->referral_wallet;
+    }
+
+    /**
+     * Get available wallets for withdrawal
+     *
+     * @return array
+     */
+    public function getAvailableWallets()
+    {
+        return [
+            'account_bal' => [
+                'name' => 'Total Balance',
+                'balance' => $this->account_bal,
+                'description' => 'Main account balance'
+            ],
+            'investment_wallet' => [
+                'name' => 'Total Investment',
+                'balance' => $this->investment_wallet,
+                'description' => 'Total investment amount'
+            ],
+            'earnings_wallet' => [
+                'name' => 'Total Earnings',
+                'balance' => $this->earnings_wallet,
+                'description' => 'Total earnings/ROI'
+            ],
+            'referral_wallet' => [
+                'name' => 'Total Referral',
+                'balance' => $this->referral_wallet,
+                'description' => 'Referral bonus earnings'
+            ]
+        ];
+    }
+
+    /**
+     * Debit from a specific wallet
+     *
+     * @param string $wallet
+     * @param float $amount
+     * @return bool
+     */
+    public function debitWallet($wallet, $amount)
+    {
+        if (!in_array($wallet, ['account_bal', 'investment_wallet', 'earnings_wallet', 'referral_wallet'])) {
+            return false;
+        }
+
+        if ($this->$wallet < $amount) {
+            return false;
+        }
+
+        $this->$wallet -= $amount;
+        $this->last_withdrawal_wallet = $wallet;
+        return $this->save();
+    }
+
+    /**
+     * Credit to a specific wallet
+     *
+     * @param string $wallet
+     * @param float $amount
+     * @return bool
+     */
+    public function creditWallet($wallet, $amount)
+    {
+        if (!in_array($wallet, ['account_bal', 'investment_wallet', 'earnings_wallet', 'referral_wallet'])) {
+            return false;
+        }
+
+        $this->$wallet += $amount;
+        return $this->save();
+    }
 
 
     public function dp()
