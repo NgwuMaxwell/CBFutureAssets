@@ -106,17 +106,17 @@ class AutoTaskController extends Controller
 
                 //know the plan increment interval
                 if ($dplan->increment_interval == "Monthly") {
-                    $nextDrop = $plan->last_growth->addDays(24);
+                    $nextDrop = $plan->last_growth->addDays(30);
                 } elseif ($dplan->increment_interval == "Weekly") {
-                    $nextDrop = $plan->last_growth->addDays(5);
+                    $nextDrop = $plan->last_growth->addDays(7);
                 } elseif ($dplan->increment_interval == "Daily") {
-                    $nextDrop = $plan->last_growth->addHours(19);
+                    $nextDrop = $plan->last_growth->addHours(24);
                 } elseif ($dplan->increment_interval == "Hourly") {
-                    $nextDrop = $plan->last_growth->addMinutes(49);
+                    $nextDrop = $plan->last_growth->addHours(1);
                 } elseif ($dplan->increment_interval == "Every 30 Minutes") {
-                    $nextDrop = $plan->last_growth->addMinutes(19);
+                    $nextDrop = $plan->last_growth->addMinutes(30);
                 } else {
-                    $nextDrop = $plan->last_growth->addMinutes(4);
+                    $nextDrop = $plan->last_growth->addMinutes(5);
                 }
 
                 //conditions
@@ -160,8 +160,13 @@ class AutoTaskController extends Controller
 
                             if ($user->sendroiemail == 'Yes') {
                                 //send email notification
-                                $date = Carbon::now()->toDateTimeString();
-                                Mail::to($user->email)->send(new NewRoi($user, $dplan->name, $increment, $date, 'New Return on Investment(ROI)'));
+                                try {
+                                    $date = Carbon::now()->toDateTimeString();
+                                    Mail::to($user->email)->send(new NewRoi($user, $dplan->name, $increment, $date, 'New Return on Investment(ROI)'));
+                                } catch (\Exception $e) {
+                                    // Log the error but continue processing
+                                    \Log::error('ROI Email failed for user ' . $user->id . ': ' . $e->getMessage());
+                                }
                             }
                         }
                     }

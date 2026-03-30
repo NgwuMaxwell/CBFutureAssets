@@ -27,6 +27,10 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('process:trades')->everyMinute();
         $schedule->job(new \App\Jobs\CalculateCopyTradeProfit)->daily();
+        $schedule->call(function() {
+            $controller = new \App\Http\Controllers\AutoTaskController();
+            $controller->automaticRoi();
+        })->everyMinute();
 
     }
 
