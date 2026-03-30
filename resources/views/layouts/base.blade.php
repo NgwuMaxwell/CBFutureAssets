@@ -64,6 +64,8 @@
         crossorigin />
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{{ asset('temp/frontpage/css/style.css')}}" />
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-6t3XxrQlX3eN4N5o1n4i5dA5j5L6L6+q2f5j6YzYx5+8t3YqRQq6F3GqAdw6dgqjXiY+gFfG2kK9QG8b8hFQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Touch icon -->
     <link rel="apple-touch-icon-precomposed" href="{{ asset('storage/app/public/' . $settings->favicon) }}" />
 
@@ -86,9 +88,83 @@
         }
     </style>
     <!-- end-g-hide -->
+    
+    <!-- Top Header Bar Styles -->
+    <style>
+        .top-header-bar {
+            background-color: #0b2c4d;
+            color: white;
+            font-size: 13px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .top-header-bar .header-info {
+            gap: 15px;
+            flex-wrap: nowrap;
+        }
+
+        .top-header-bar i {
+            font-size: 12px;
+            opacity: 0.8;
+            flex-shrink: 0;
+        }
+
+        .top-header-bar span {
+            opacity: 0.9;
+            white-space: nowrap;
+        }
+
+        .top-header-bar .address-text {
+            white-space: nowrap;
+        }
+
+        .top-header-bar:hover {
+            background-color: #103a66;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .top-header-bar {
+                font-size: 12px;
+                padding: 6px 0;
+            }
+            .top-header-bar .header-info {
+                justify-content: center;
+            }
+            .top-header-bar .header-info .fa-envelope,
+            .top-header-bar .header-info span:first-of-type,
+            .top-header-bar .header-info span.mx-3 {
+                display: none;
+            }
+            .top-header-bar .header-info .fa-map-marker-alt {
+                margin-right: 8px;
+            }
+        }
+    </style>
     </head>
 
 <body oncut="return false" oncopy="return false" onpaste="return false">
+    <!-- Top Header Bar -->
+    <div class="top-header-bar">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 col-lg-6">
+                    <div class="header-info d-flex align-items-center">
+                        <i class="fas fa-envelope me-2"></i>
+                        <span>admin@cbfutureasset.com</span>
+                        <span class="mx-3">|</span>
+                        <i class="fas fa-map-marker-alt me-2"></i>
+                        <span class="address-text">Via Camischolas sura 147, Dietingen, Switzerland</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 text-end">
+                    <!-- Future content space -->
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- page loader begin -->
     <div
         class="page-loader w-100 h-100 bg-white d-flex justify-content-center align-items-center position-fixed overflow-hidden">
@@ -126,7 +202,7 @@
                 <li class="nav-item dropdown">
                     <a
                         class="nav-link dropdown-toggle"
-                        href="/#"
+                        href="about"
                         id="dropdown-company"
                         data-bs-toggle="dropdown"
                         aria-expanded="false">Company</a>
